@@ -147,10 +147,6 @@ tail -f /mnt/user/appdata/containernetwork-autofix/containernetwork-autofix.log
 ## Roadmap
 
 - [ ] Support for multiple master containers
-- [ ] Generic Docker support (without Unraid templates)
-- [ ] Web UI for configuration
-- [ ] Discord/webhook notifications
-- [ ] Docker Compose support
 
 ## Contributing
 

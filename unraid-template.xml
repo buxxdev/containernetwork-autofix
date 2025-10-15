@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>ContainerNetwork-AutoFix</Name>
+  <Repository>buxxdev/containernetwork-autofix:latest</Repository>
+  <Registry>https://hub.docker.com/r/buxxdev/containernetwork-autofix</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/buxxdev/containernetwork-autofix/issues</Support>
+  <Project>https://github.com/buxxdev/containernetwork-autofix</Project>
+  <Overview>ContainerNetwork AutoFix (CNAF) - Automatically recreates Docker containers that depend on a master container's network when the master container restarts. Perfect for containers routing through VPN containers like GluetunVPN.&#xD;
+&#xD;
+When a master container (e.g., VPN) restarts and gets a new container ID, dependent containers using --net=container: lose network connectivity. CNAF automatically detects and recreates those dependent containers.&#xD;
+&#xD;
+Features:&#xD;
+- Auto-detects dependent containers&#xD;
+- Preserves container states (running/stopped)&#xD;
+- Smart waiting for VPN establishment&#xD;
+- Automatic log rotation&#xD;
+- Zero manual configuration needed</Overview>
+  <Category>Tools: Network:VPN Status:Stable</Category>
+  <WebUI/>
+  <TemplateURL/>
+  <Icon>https://raw.githubusercontent.com/buxxdev/containernetwork-autofix/main/icon.png</Icon>
+  <ExtraParams>--restart=unless-stopped</ExtraParams>
+  <PostArgs/>
+  <CPUset/>
+  <DateInstalled></DateInstalled>
+  <DonateText/>
+  <DonateLink/>
+  <Requires/>
+  <Config Name="Docker Socket" Target="/var/run/docker.sock" Default="/var/run/docker.sock" Mode="rw" Description="Required: Access to Docker daemon to monitor and recreate containers" Type="Path" Display="always" Required="true" Mask="false">/var/run/docker.sock</Config>
+  <Config Name="Container Templates" Target="/templates" Default="/boot/config/plugins/dockerMan/templates-user" Mode="ro" Description="Required: Path to Unraid container templates for recreation" Type="Path" Display="always" Required="true" Mask="false">/boot/config/plugins/dockerMan/templates-user</Config>
+  <Config Name="Rebuild Scripts" Target="/scripts" Default="/usr/local/emhttp/plugins/dynamix.docker.manager/scripts" Mode="ro" Description="Required: Path to Unraid's container rebuild scripts" Type="Path" Display="always" Required="true" Mask="false">/usr/local/emhttp/plugins/dynamix.docker.manager/scripts</Config>
+  <Config Name="AppData" Target="/var/log" Default="/mnt/user/appdata/containernetwork-autofix" Mode="rw" Description="Optional: Persistent storage for logs" Type="Path" Display="always" Required="false" Mask="false">/mnt/user/appdata/containernetwork-autofix</Config>
+  <Config Name="Master Container Name" Target="MASTER_CONTAINER" Default="GluetunVPN" Mode="" Description="Name of the master container to monitor (e.g., GluetunVPN, OpenVPN-Client)" Type="Variable" Display="always" Required="true" Mask="false">GluetunVPN</Config>
+  <Config Name="Restart Wait Time" Target="RESTART_WAIT_TIME" Default="15" Mode="" Description="Seconds to wait after master container restarts before recreating dependents (allows VPN to establish)" Type="Variable" Display="always" Required="false" Mask="false">15</Config>
+  <Config Name="Max Log Lines" Target="MAX_LOG_LINES" Default="1000" Mode="" Description="Maximum number of log lines to keep (automatic rotation)" Type="Variable" Display="advanced" Required="false" Mask="false">1000</Config>
+  <Config Name="Max Retries" Target="MAX_RETRIES" Default="10" Mode="" Description="Number of times to retry finding master container on startup" Type="Variable" Display="advanced" Required="false" Mask="false">10</Config>
+  <Config Name="Retry Delay" Target="RETRY_DELAY" Default="10" Mode="" Description="Seconds between retry attempts when finding master container" Type="Variable" Display="advanced" Required="false" Mask="false">10</Config>
+</Container>
+```
+
+---
+
+## 6. Additional Files
+
+### .dockerignore
+```
+.git
+.gitignore
+README.md
+unraid-template.xml
+*.md
+LICENSE
+```
+
+### .gitignore
+```
+*.log
+.DS_Store
